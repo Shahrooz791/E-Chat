@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "995423383905",
+    "project_id": "e-chat-59e0a",
+    "storage_bucket": "e-chat-59e0a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995423383905:android:4dbfc1642b2e42df1a9520",
+        "android_client_info": {
+          "package_name": "com.example.e_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU9SpAwymdQUAKyFwFnJP5eE-vzeXIlJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
