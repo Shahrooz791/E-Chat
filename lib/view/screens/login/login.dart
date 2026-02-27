@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -172,7 +173,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
                 auth.signInWithEmailAndPassword(email: controller.emailController.text.toString(), password: controller.passController.text.toString()).then((value) {
-                  showCustomSnackBar(context, 'Next Screen');
+
+                  controller.emailController.clear();
+                  controller.passController.clear();
+
+                  Navigator.pushNamedAndRemoveUntil(context, '/BottomBarScreen', (route) => false,);
+
                 },).onError((error, stackTrace) {
                   debugPrint('error ${error.toString()}');
                   showCustomSnackBar(context, 'error ${error.toString()}');
@@ -194,6 +200,8 @@ class _LoginScreenState extends State<LoginScreen> {
             }, child: CustomText(text: 'Don’t have an account? Sign Up', fontWeight: .w600, fontSize: 16, color: MyColors.primaryBlue(context))),
 
             SizedBox(height: 20.h,),
+
+
 
             SizedBox(
 
@@ -227,7 +235,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   return GestureDetector(
 
-                    onTap: (){},
+                    onTap: (){
+
+
+                      if(index == 1){
+
+
+                        signInWithGoogle().then((value) {
+
+
+                          Navigator.pushNamedAndRemoveUntil(context, '/YourProfileScreen', (route) => false,);
+
+
+                        },).onError((error, stackTrace) {
+
+
+                          showCustomSnackBar(context, error.toString());
+                        },);
+
+
+
+                      }
+
+
+                    },
 
 
                     child: Container(
@@ -259,10 +290,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
+
+
             SizedBox(height: 35.h,),
 
 
-            TextButton(onPressed: (){} , child: CustomText(text: 'Forgot password?', fontWeight: .w600, fontSize: 16, color: MyColors.primaryBlue(context))),
+            TextButton(onPressed: (){
+              Navigator.pushNamed(context, '/ForgotScreen');
+            } , child: CustomText(text: 'Forgot password?', fontWeight: .w600, fontSize: 16, color: MyColors.primaryBlue(context))),
 
 
 
@@ -284,5 +319,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   }
+
+
+  Future<void> signInWithGoogle()async{
+
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    final GoogleSignInAuthentication? googleAuth = await googleUser!.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+
+      idToken: googleAuth!.idToken,
+      accessToken: googleAuth.accessToken,
+
+    );
+
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
+
+
+
+  }
+
+
 
 }

@@ -16,4 +16,14 @@ class SignupController extends GetxController{
   final confirmPassController = TextEditingController();
 
 
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    emailController.dispose();
+    passController.dispose();
+    confirmPassController.dispose();
+  }
+
+
 }

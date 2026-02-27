@@ -120,7 +120,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(height: 38.h,),
 
 
-                    InputField(hintText: 'Password',validator: (value){
+                    InputField(
+
+                      controller: controller.passController,
+
+                      hintText: 'Password',validator: (value){
 
 
                       if(value == null || value.isEmpty){
@@ -157,7 +161,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(height: 38.h,),
 
 
-                    Obx(() => InputField(hintText: 'Confirm Password',validator: (value){
+                    InputField(
+
+                      controller: controller.confirmPassController,
+
+                      hintText: 'Confirm Password',validator: (value){
 
 
                       if(value == null || value.isEmpty){
@@ -188,7 +196,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
 
 
-                    },autoValidateMode: controller.mode.value,),),
+                    },autoValidateMode: controller.mode.value,),
 
 
                   ],
@@ -205,26 +213,44 @@ class _SignupScreenState extends State<SignupScreen> {
 
               controller.key.value.currentState!.validate();
 
-              if(controller.emailController.text.isNotEmpty && controller.passController.text.isNotEmpty && controller.confirmPassController.text.isNotEmpty ){
-
-                auth.signInWithEmailAndPassword(email: controller.emailController.text, password: controller.passController.text).then((value) {
 
 
-                  showCustomSnackBar(context, 'Signin Successful');
+              if(controller.passController.text.trim() == controller.confirmPassController.text.trim()){
 
 
-                },).onError((error, stackTrace) {
+
+                if(controller.emailController.text.trim().isNotEmpty && controller.passController.text.trim().isNotEmpty && controller.confirmPassController.text.trim().isNotEmpty ){
+
+                  auth.createUserWithEmailAndPassword(email: controller.emailController.text, password: controller.confirmPassController.text).then((value) {
 
 
-                  showCustomSnackBar(context, error.toString());
+                    Navigator.pushNamedAndRemoveUntil(context, '/YourProfileScreen', (route) => false,);
+
+                    controller.emailController.clear();
+                    controller.passController.clear();
+                    controller.confirmPassController.clear();
 
 
-                },);
+                  },).onError((error, stackTrace) {
+
+
+                    showCustomSnackBar(context, error.toString());
+
+
+                  },);
+
+
+                }
 
 
               }else{
-                showCustomSnackBar(context, 'no');
+
+
+                showCustomSnackBar(context, 'Do no match password');
+
               }
+
+
 
 
 
@@ -250,8 +276,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
 
   }
-
-
 
 
 

@@ -7,6 +7,7 @@ import '../../screens/login/login.dart';
 import '../../screens/login/signup.dart';
 import '../../screens/login/your_profile.dart';
 import '../../screens/onboarding/onboarding.dart';
+import 'bottom_bar.dart';
 
 class MyRoutes{
 
@@ -19,6 +20,7 @@ class MyRoutes{
     '/SignupScreen' : (context) => SignupScreen(),
     '/YourProfileScreen' : (context) => YourProfileScreen(),
     '/ForgotScreen' : (context) => ForgotScreen(),
+    '/BottomBarScreen' : (context) => BottomBarScreen(),
 
 
 };
