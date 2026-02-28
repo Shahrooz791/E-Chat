@@ -2,6 +2,7 @@ import 'package:e_chat/view/core/widgets/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 
@@ -115,30 +116,42 @@ class _ForgotScreenState extends State<ForgotScreen> {
             SizedBox(height: 70.h,),
 
 
-            CustomButton(text: 'Continue',onTapped: (){
+            Obx(() {
 
-              controller.key.value.currentState!.validate();
+              return  CustomButton(
 
+                progress: controller.progress.value,
 
-              if(controller.emailController.text.isNotEmpty){
+                text: 'Continue',onTapped: (){
 
-                auth.sendPasswordResetEmail(email: controller.emailController.text).then((value) {
-
-                  showCustomSnackBar(context, 'Password forgot link share in your email');
-                  controller.emailController.clear();
+                controller.key.value.currentState!.validate();
 
 
-                },).onError((error, stackTrace) {
+                if(controller.emailController.text.isNotEmpty){
 
-                  showCustomSnackBar(context, error.toString());
+                  controller.progress.value = true;
+
+                  auth.sendPasswordResetEmail(email: controller.emailController.text).then((value) {
+
+                    showCustomSnackBar(context, 'Password forgot link share in your email');
+                    controller.emailController.clear();
+                    controller.progress.value = false;
+
+                  },).onError((error, stackTrace) {
+
+                    showCustomSnackBar(context, error.toString());
+                    controller.progress.value = false;
 
 
-                },);
+                  },);
 
-              }
+                }
 
 
 
+
+
+              },) ;
 
 
             },) ,

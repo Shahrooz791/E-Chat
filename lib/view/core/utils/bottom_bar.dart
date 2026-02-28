@@ -51,7 +51,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
 
 
 
-          BottomNavigationBarItem(icon: SvgPicture.asset(SvgImages.chat,color: MyColors.black(context),),label: 'Message' ,activeIcon: SvgPicture.asset(SvgImages.chat,color: MyColors.primaryBlue(context),)),
+          BottomNavigationBarItem(icon: SvgPicture.asset(SvgImages.chat,color: MyColors.black(context),),label: 'Chats' ,activeIcon: SvgPicture.asset(SvgImages.chat,color: MyColors.primaryBlue(context),)),
           BottomNavigationBarItem(icon: SvgPicture.asset(SvgImages.contact,color: MyColors.black(context)) ,label: 'Contacts' ,activeIcon: SvgPicture.asset(SvgImages.contact,color: MyColors.primaryBlue(context),) ),
           BottomNavigationBarItem(icon: Icon(Icons.more_horiz,color: MyColors.black(context) ),label: 'More',activeIcon:  Icon(Icons.more_horiz,color: MyColors.primaryBlue(context) ) ),
 

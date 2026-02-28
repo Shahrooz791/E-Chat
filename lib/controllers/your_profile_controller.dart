@@ -12,8 +12,14 @@ class YourProfileController extends GetxController{
 
   final Rx<AutovalidateMode>  mode = AutovalidateMode.disabled.obs;
 
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
+  final nameController = TextEditingController();
+  final bioController = TextEditingController();
+
+  RxBool progress = false.obs;
+
+  RxString selectDate = 'Select Date'.obs;
+
+  RxString selectGender = 'Select Gender'.obs;
 
 
 
@@ -50,8 +56,8 @@ class YourProfileController extends GetxController{
   void onClose() {
     // TODO: implement onClose
 
-    firstNameController.dispose();
-    lastNameController.dispose();
+    nameController.dispose();
+    bioController.dispose();
 
     super.onClose();
   }

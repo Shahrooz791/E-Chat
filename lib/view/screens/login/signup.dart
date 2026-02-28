@@ -209,49 +209,60 @@ class _SignupScreenState extends State<SignupScreen> {
             SizedBox(height: 70.h,),
 
 
-            CustomButton(text: 'Continue',onTapped: (){
+            Obx(() {
 
-              controller.key.value.currentState!.validate();
+              return CustomButton(
 
+                progress: controller.progress.value,
 
+                text: 'Continue',onTapped: (){
 
-              if(controller.passController.text.trim() == controller.confirmPassController.text.trim()){
-
-
-
-                if(controller.emailController.text.trim().isNotEmpty && controller.passController.text.trim().isNotEmpty && controller.confirmPassController.text.trim().isNotEmpty ){
-
-                  auth.createUserWithEmailAndPassword(email: controller.emailController.text, password: controller.confirmPassController.text).then((value) {
+                controller.key.value.currentState!.validate();
 
 
-                    Navigator.pushNamedAndRemoveUntil(context, '/YourProfileScreen', (route) => false,);
 
-                    controller.emailController.clear();
-                    controller.passController.clear();
-                    controller.confirmPassController.clear();
+                if(controller.passController.text.trim() == controller.confirmPassController.text.trim()){
 
 
-                  },).onError((error, stackTrace) {
+                  controller.progress.value = true;
+
+                  if(controller.emailController.text.trim().isNotEmpty && controller.passController.text.trim().isNotEmpty && controller.confirmPassController.text.trim().isNotEmpty ){
+
+                    auth.createUserWithEmailAndPassword(email: controller.emailController.text, password: controller.confirmPassController.text).then((value) {
 
 
-                    showCustomSnackBar(context, error.toString());
+                      Navigator.pushNamedAndRemoveUntil(context, '/YourProfileScreen', (route) => false,);
+
+                      controller.emailController.clear();
+                      controller.passController.clear();
+                      controller.confirmPassController.clear();
+                      controller.progress.value = false;
+
+                    },).onError((error, stackTrace) {
 
 
-                  },);
+                      showCustomSnackBar(context, error.toString());
+                      controller.progress.value = false;
 
+
+                    },);
+
+
+                  }
+
+
+                }else{
+
+
+                  showCustomSnackBar(context, 'Do no match password');
 
                 }
 
 
-              }else{
-
-
-                showCustomSnackBar(context, 'Do no match password');
-
-              }
 
 
 
+              },) ;
 
 
             },) ,

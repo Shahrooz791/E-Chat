@@ -163,31 +163,42 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 70.h,),
 
 
-            CustomButton(text: 'Continue',onTapped: ()async{
-
-              controller.key.value.currentState!.validate();
-
-              if(controller.emailController.text.isNotEmpty && controller.passController.text.isNotEmpty){
-
-                
+            Obx(() {
 
 
-                auth.signInWithEmailAndPassword(email: controller.emailController.text.toString(), password: controller.passController.text.toString()).then((value) {
+              return  CustomButton(
 
-                  controller.emailController.clear();
-                  controller.passController.clear();
+                progress: controller.progress.value,
 
-                  Navigator.pushNamedAndRemoveUntil(context, '/BottomBarScreen', (route) => false,);
+                text: 'Continue',onTapped: ()async{
 
-                },).onError((error, stackTrace) {
-                  debugPrint('error ${error.toString()}');
-                  showCustomSnackBar(context, 'error ${error.toString()}');
-                },);
+                controller.key.value.currentState!.validate();
 
+                if(controller.emailController.text.isNotEmpty && controller.passController.text.isNotEmpty){
 
-              }
+                  controller.progress.value = true;
 
 
+                  auth.signInWithEmailAndPassword(email: controller.emailController.text.toString(), password: controller.passController.text.toString()).then((value) {
+
+                    controller.emailController.clear();
+                    controller.passController.clear();
+                    controller.progress.value = false;
+
+                    Navigator.pushNamedAndRemoveUntil(context, '/BottomBarScreen', (route) => false,);
+
+                  },).onError((error, stackTrace) {
+                    showCustomSnackBar(context, error.toString());
+                    controller.progress.value = false;
+                  },);
+
+
+                }
+
+
+
+
+              },);
 
 
             },),

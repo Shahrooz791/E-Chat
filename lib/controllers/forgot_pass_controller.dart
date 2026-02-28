@@ -10,6 +10,8 @@ class ForgotPassController extends GetxController{
 
   final emailController = TextEditingController();
 
+  RxBool progress = false.obs;
+
 
 
 

@@ -11,6 +11,8 @@ class SignupController extends GetxController{
 
   final Rx<AutovalidateMode> mode = AutovalidateMode.disabled.obs;
 
+  RxBool progress = false.obs;
+
   final emailController = TextEditingController();
   final passController = TextEditingController();
   final confirmPassController = TextEditingController();

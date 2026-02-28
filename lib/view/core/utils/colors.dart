@@ -57,6 +57,18 @@ class MyColors {
   }
 
 
+  static Color greyThree(BuildContext context){
+
+
+    return  Theme.of(context).brightness == Brightness.light ?
+
+        Color(0xffEDEDED):
+        Color(0xff152033);
+
+
+
+  }
+
   static Color bgWhite(BuildContext context){
 
     return Theme.of(context).brightness == Brightness.light?

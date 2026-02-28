@@ -131,9 +131,9 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                     InputField(
 
 
-                      controller: controller.firstNameController,
+                      controller: controller.nameController,
 
-                      hintText: 'First Name (Required)',
+                      hintText: 'Enter Name',
 
                       validator: (value){
 
@@ -162,7 +162,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                     InputField(
 
 
-                        controller: controller.lastNameController,
+                        controller: controller.bioController,
 
                         validator: (value){
 
@@ -180,7 +180,166 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
 
                         },
 
-                        hintText: 'Last Name (Optional)'),
+                        hintText: 'Add Bio'),
+
+                    SizedBox(height: 38.h,),
+
+                    Obx(() => Container(
+
+                      height: 45.h,
+
+                      width: .infinity,
+
+                      decoration: BoxDecoration(
+
+                        borderRadius: .circular(4.r),
+
+                        color: MyColors.greyTwo(context),
+
+                      ),
+
+                      child: Row(
+
+
+                        children: [
+
+
+                          SizedBox(width: 10.h,),
+
+
+
+                          CustomText(text: controller.selectDate.value, fontWeight: .w600, fontSize: 14, color: MyColors.grey(context)),
+
+                          Spacer(),
+
+                          IconButton(onPressed: ()async{
+
+
+
+
+                            var datePicked   =   await showDatePicker(
+
+                              context: context,
+
+                              firstDate: DateTime(1947),
+
+                              lastDate: DateTime.now(),
+
+                              initialDate: DateTime.now(),
+
+                            );
+
+
+                            if(datePicked != null){
+                              controller.selectDate.value = '${datePicked.day}/${datePicked.month}/${datePicked.year}';
+                            }
+
+
+
+                          }, icon: Icon(Icons.calendar_month,color: MyColors.grey(context),)),
+
+
+                        ],
+
+
+                      ),
+
+                    ),),
+
+
+
+                    SizedBox(height: 38.h,),
+
+
+                    Obx(() => Container(
+
+                      height: 45.h,
+
+                      width: .infinity,
+
+                      decoration: BoxDecoration(
+
+                        borderRadius: .circular(4.r),
+
+                        color: MyColors.greyTwo(context),
+
+                      ),
+
+                      child: Row(
+
+
+                        children: [
+
+
+                          SizedBox(width: 10.h,),
+
+
+
+                          CustomText(text: controller.selectGender.value, fontWeight: .w600, fontSize: 14, color: MyColors.grey(context)),
+
+                          Spacer(),
+
+                          //IconButton(onPressed: (){}, icon: Icon(Icons.arrow_drop_down,color: MyColors.grey(context),)),
+
+                          DropdownButton(
+
+                              icon: Icon(Icons.arrow_drop_down,color: MyColors.grey(context),),
+
+
+                              value: controller.selectGender,
+
+                              items: [
+
+                                DropdownMenuItem(value: 'Male',child: CustomText(text: 'Male', fontWeight: .w600, fontSize: 16, color: MyColors.black(context)),onTap: (){
+                                  controller.selectGender.value = 'Male';
+                                },),
+                                DropdownMenuItem(value: 'Female',child: CustomText(text: 'Female', fontWeight: .w600, fontSize: 16, color: MyColors.black(context)),onTap: (){
+                                  controller.selectGender.value = 'Female';
+                                },),
+
+                              ], onChanged: (value){}),
+
+                          DropdownButton<String>(
+
+                            value: controller.selectGender.value == 'Select Gender'
+                                ? null
+                                : controller.selectGender.value,
+
+                            hint: CustomText(
+                                text: 'Select Gender',
+                                fontWeight: .w600,
+                                fontSize: 14,
+                                color: MyColors.grey(context)),
+
+                            icon: Icon(Icons.arrow_drop_down,
+                                color: MyColors.grey(context)),
+
+                            underline: SizedBox(),
+
+                            items: ['Male', 'Female']
+                                .map((gender) => DropdownMenuItem<String>(
+                              value: gender,
+                              child: CustomText(
+                                  text: gender,
+                                  fontWeight: .w600,
+                                  fontSize: 16,
+                                  color: MyColors.black(context)),
+                            ))
+                                .toList(),
+
+                            onChanged: (value) {
+                              controller.selectGender.value = value!;
+                            },
+                          ),
+
+
+                        ],
+
+
+                      ),
+
+                    ),),
+
 
 
                   ],
@@ -192,94 +351,73 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             SizedBox(height: 50.h,),
 
 
-            CustomButton(text: 'Save',
+            Obx(() {
+
+              return CustomButton(
+
+                progress: controller.progress.value,
+
+                text: 'Save',
 
 
 
-              onTapped: (){
+                onTapped: (){
 
 
 
-                controller.key.currentState!.validate();
-
-                controller.mode.value = AutovalidateMode.always;
-
-
-                if(controller.firstNameController.text.isNotEmpty && controller.lastNameController.text.isNotEmpty && controller.firstNameController.text.length >= 5 && controller.lastNameController.text.length >= 5 && controller.image.value != null ){
-
-
-
-                  ref.doc('id').set({
-                    'firstName' : controller.firstNameController.text,
-                    'lastName' : controller.lastNameController.text,
-                  }).then((value) {
-
-
-                    controller.firstNameController.clear();
-                    controller.lastNameController.clear();
-                    Navigator.pushNamedAndRemoveUntil(context, '/BottomBarScreen', (route) => false,);
-
-
-                  },).onError((error, stackTrace) {
-
-                    showCustomSnackBar(context, error.toString());
-
-
-
-                  },);
-
-
-
-
-
-                }
-
-
-
-
-
-              },
-
-
-               /*
-                onTapped: () async {
+                  controller.key.currentState!.validate();
 
                   controller.mode.value = AutovalidateMode.always;
-                  print('check ${FirebaseAuth.instance.currentUser?.uid}');
 
                   final id = FirebaseAuth.instance.currentUser!.uid;
 
-                  if (controller.key.currentState!.validate() &&
-                      controller.image.value != null) {
 
-                    try {
+                  if(controller.nameController.text.isNotEmpty && controller.bioController.text.isNotEmpty && controller.nameController.text.length >= 5 && controller.bioController.text.length >= 5 && controller.image.value != null ){
 
-                      await ref.doc(id).set({
-                        'firstName': controller.firstNameController.text,
-                        'lastName': controller.lastNameController.text,
-                      });
 
-                      showCustomSnackBar(context, 'Added Successfully');
+                    controller.progress.value = true;
 
-                      // Navigator.pushNamedAndRemoveUntil(
-                      //   context,
-                      //   '/BottomBarScreen',
-                      //   (route) => false,
-                      // );
+                    ref.doc(id).set({
+                      'id' : id,
+                      'name' : controller.nameController.text,
+                      'bio' : controller.bioController.text,
+                      'email' : FirebaseAuth.instance.currentUser!.email,
+                    }).then((value) {
 
-                    } catch (e) {
-                      showCustomSnackBar(context, e.toString());
-                      debugPrint('error $e');
-                    }
 
-                  } else {
-                    showCustomSnackBar(context, 'Please complete all fields');
+                      controller.nameController.clear();
+                      controller.bioController.clear();
+                      Navigator.pushNamedAndRemoveUntil(context, '/BottomBarScreen', (route) => false,);
+
+                      controller.progress.value = false;
+
+                    },).onError((error, stackTrace) {
+
+                      showCustomSnackBar(context, error.toString());
+                      controller.progress.value = false;
+
+
+
+                    },);
+
+
+
+
+
                   }
-                }
-                */
 
 
-            ),
+
+
+
+                },
+
+
+
+              ) ;
+
+
+            },),
 
 
 

@@ -7,8 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback? onTapped;
+  final bool? progress;
 
-  const CustomButton({super.key, required this.text,this.onTapped});
+  const CustomButton({super.key, required this.text,this.onTapped,this.progress});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class CustomButton extends StatelessWidget {
 
       onPressed: onTapped,
 
-      child: CustomText(
+      child:  progress == true ?  CircularProgressIndicator(color: MyColors.bgWhite(context),)  : CustomText(
         text: text.tr(),
         fontWeight: .w600,
         fontSize: 16.sp,

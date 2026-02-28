@@ -10,6 +10,7 @@ class LoginController extends GetxController{
     SvgImages.apple,
   ].obs;
 
+  RxBool progress = false.obs;
 
   var key = GlobalKey<FormState>().obs;
 

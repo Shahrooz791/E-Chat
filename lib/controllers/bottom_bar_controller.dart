@@ -3,6 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../view/screens/chats/chat.dart';
+import '../view/screens/chats/contacts.dart';
+import '../view/screens/chats/more.dart';
+
 class BottomBarController extends GetxController{
 
   RxInt  selectIndex = 0.obs;
@@ -10,24 +14,9 @@ class BottomBarController extends GetxController{
   RxList  screens = [
 
 
-    Scaffold(
-
-      body: Center(child: Text('message'),),
-
-    ),
-
-    Scaffold(
-
-      body: Center(child: Text('contacts'),),
-
-    ),
-
-
-    Scaffold(
-
-      body: Center(child: Text('more'),),
-
-    ),
+    ChatScreen(),
+    ContactsScreen(),
+    MoreScreen(),
 
   ].obs;
 

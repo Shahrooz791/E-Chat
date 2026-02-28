@@ -19,5 +19,7 @@ class  SvgImages{
   static const String addImageIcon = '${_path}Icon (1).svg';
   static const String contact = '${_path}user.svg';
   static const String chat = '${_path}Message.svg';
+  static const String searchIcon = '${_path}Icon (2).svg';
+  static const String sendIcon = '${_path}Icon (3).svg';
 
 }

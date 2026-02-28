@@ -9,8 +9,9 @@ class InputField extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String?)?  validator;
   final AutovalidateMode?  autoValidateMode;
+  final Widget? prefixIcon;
 
-  const InputField({super.key, required this.hintText, this.controller,this.validator,this.autoValidateMode});
+  const InputField({super.key, required this.hintText, this.controller,this.validator,this.autoValidateMode,this.prefixIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,9 @@ class InputField extends StatelessWidget {
 
       decoration: InputDecoration(
         hintText: hintText.tr(),
+
+
+        prefixIcon: prefixIcon,
 
         hintStyle: GoogleFonts.saira(
           fontWeight: .w600,
