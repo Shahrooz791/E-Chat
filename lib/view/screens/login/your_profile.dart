@@ -8,6 +8,7 @@ import 'package:e_chat/view/core/widgets/custom_padding.dart';
 import 'package:e_chat/view/core/widgets/custom_snackbar.dart';
 import 'package:e_chat/view/core/widgets/custom_text.dart';
 import 'package:e_chat/view/core/widgets/input_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -115,237 +116,168 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             SizedBox(height: 50.h,),
 
 
-            Form(
+            InputField(
 
-                key: controller.key,
 
-                autovalidateMode: controller.mode.value,
+              controller: controller.nameController,
 
-                child: Column(
+              hintText: 'Enter Name',
 
 
 
-                  children: [
 
+            ),
 
-                    InputField(
 
+            SizedBox(height: 38.h,),
 
-                      controller: controller.nameController,
 
-                      hintText: 'Enter Name',
+            InputField(
 
-                      validator: (value){
 
+                controller: controller.bioController,
 
-                        if(value == null || value.isEmpty){
 
+                hintText: 'Add Bio'),
 
-                          return 'Enter value' ;
+            SizedBox(height: 38.h,),
 
-                        }else if( value.length < 5){
-                          return 'Minimum 5 letter';
-                        }
+            Obx(() => Container(
 
+              height: 45.h,
 
+              width: .infinity,
 
-                      },
+              decoration: BoxDecoration(
 
+                borderRadius: .circular(4.r),
 
+                color: MyColors.greyTwo(context),
 
-                    ),
+              ),
 
+              child: Row(
 
-                    SizedBox(height: 38.h,),
 
+                children: [
 
-                    InputField(
 
+                  SizedBox(width: 10.h,),
 
-                        controller: controller.bioController,
 
-                        validator: (value){
 
+                  CustomText(text: controller.selectDate.value, fontWeight: .w500, fontSize: 14, color: controller.selectDate.value !=  'Select Date'?  MyColors.black(context) : MyColors.grey(context)),
 
-                          if(value == null || value.isEmpty){
+                  Spacer(),
 
+                  IconButton(onPressed: ()async{
 
-                            return 'Enter value' ;
 
-                          }else if( value.length < 5){
-                            return 'Minimum 5 letter';
-                          }
 
 
+                    var datePicked   =   await showDatePicker(
 
-                        },
+                      barrierColor: MyColors.bgWhite(context),
 
-                        hintText: 'Add Bio'),
+                      context: context,
 
-                    SizedBox(height: 38.h,),
+                      firstDate: DateTime(1947),
 
-                    Obx(() => Container(
+                      lastDate: DateTime.now(),
 
-                      height: 45.h,
+                      initialDate: DateTime.now(),
 
-                      width: .infinity,
+                    );
 
-                      decoration: BoxDecoration(
 
-                        borderRadius: .circular(4.r),
+                    if(datePicked != null){
+                      controller.selectDate.value = '${datePicked.day}/${datePicked.month}/${datePicked.year}';
+                    }
 
-                        color: MyColors.greyTwo(context),
 
-                      ),
 
-                      child: Row(
+                  }, icon: Icon(Icons.calendar_month,color: MyColors.grey(context),)),
 
 
-                        children: [
+                ],
 
 
-                          SizedBox(width: 10.h,),
+              ),
 
+            ),),
 
 
-                          CustomText(text: controller.selectDate.value, fontWeight: .w600, fontSize: 14, color: MyColors.grey(context)),
 
-                          Spacer(),
+            SizedBox(height: 38.h,),
 
-                          IconButton(onPressed: ()async{
 
+            Obx(() => Container(
 
+              height: 45.h,
 
+              width: .infinity,
 
-                            var datePicked   =   await showDatePicker(
+              decoration: BoxDecoration(
 
-                              context: context,
+                borderRadius: .circular(4.r),
 
-                              firstDate: DateTime(1947),
+                color: MyColors.greyTwo(context),
 
-                              lastDate: DateTime.now(),
+              ),
 
-                              initialDate: DateTime.now(),
+              child: Row(
 
-                            );
 
+                children: [
 
-                            if(datePicked != null){
-                              controller.selectDate.value = '${datePicked.day}/${datePicked.month}/${datePicked.year}';
-                            }
 
+                  SizedBox(width: 10.h,),
 
 
-                          }, icon: Icon(Icons.calendar_month,color: MyColors.grey(context),)),
 
+                  CustomText(text: controller.selectGender.value, fontWeight: .w500, fontSize: 14, color:controller.selectGender.value != 'Select Gender' ? MyColors.black(context) : MyColors.grey(context)),
 
-                        ],
+                  Spacer(),
 
 
-                      ),
 
-                    ),),
 
+                  DropdownButton(
 
+                    value: null,
 
-                    SizedBox(height: 38.h,),
 
 
-                    Obx(() => Container(
+                    icon: Icon(Icons.arrow_drop_down,
+                        color: MyColors.grey(context)),
 
-                      height: 45.h,
 
-                      width: .infinity,
+                    underline: SizedBox(),
 
-                      decoration: BoxDecoration(
+                    dropdownColor: MyColors.bgWhite(context),
 
-                        borderRadius: .circular(4.r),
+                    items: [
 
-                        color: MyColors.greyTwo(context),
+                      DropdownMenuItem(value: 'Male',child: CustomText(text: 'Male', fontWeight: .w600, fontSize: 16, color: MyColors.black(context))),
+                      DropdownMenuItem(value: 'Female',child: CustomText(text: 'Female', fontWeight: .w600, fontSize: 16, color: MyColors.black(context))),
 
-                      ),
+                    ],
 
-                      child: Row(
+                    onChanged: (value) {
+                      controller.selectGender.value = value!;
+                    },
+                  ),
 
+                  SizedBox(width: 10.h,),
 
-                        children: [
 
 
-                          SizedBox(width: 10.h,),
+                ],
 
 
+              ),
 
-                          CustomText(text: controller.selectGender.value, fontWeight: .w600, fontSize: 14, color: MyColors.grey(context)),
-
-                          Spacer(),
-
-                          //IconButton(onPressed: (){}, icon: Icon(Icons.arrow_drop_down,color: MyColors.grey(context),)),
-
-                          DropdownButton(
-
-                              icon: Icon(Icons.arrow_drop_down,color: MyColors.grey(context),),
-
-
-                              value: controller.selectGender,
-
-                              items: [
-
-                                DropdownMenuItem(value: 'Male',child: CustomText(text: 'Male', fontWeight: .w600, fontSize: 16, color: MyColors.black(context)),onTap: (){
-                                  controller.selectGender.value = 'Male';
-                                },),
-                                DropdownMenuItem(value: 'Female',child: CustomText(text: 'Female', fontWeight: .w600, fontSize: 16, color: MyColors.black(context)),onTap: (){
-                                  controller.selectGender.value = 'Female';
-                                },),
-
-                              ], onChanged: (value){}),
-
-                          DropdownButton<String>(
-
-                            value: controller.selectGender.value == 'Select Gender'
-                                ? null
-                                : controller.selectGender.value,
-
-                            hint: CustomText(
-                                text: 'Select Gender',
-                                fontWeight: .w600,
-                                fontSize: 14,
-                                color: MyColors.grey(context)),
-
-                            icon: Icon(Icons.arrow_drop_down,
-                                color: MyColors.grey(context)),
-
-                            underline: SizedBox(),
-
-                            items: ['Male', 'Female']
-                                .map((gender) => DropdownMenuItem<String>(
-                              value: gender,
-                              child: CustomText(
-                                  text: gender,
-                                  fontWeight: .w600,
-                                  fontSize: 16,
-                                  color: MyColors.black(context)),
-                            ))
-                                .toList(),
-
-                            onChanged: (value) {
-                              controller.selectGender.value = value!;
-                            },
-                          ),
-
-
-                        ],
-
-
-                      ),
-
-                    ),),
-
-
-
-                  ],
-
-
-                )),
+            ),),
 
 
             SizedBox(height: 50.h,),
@@ -364,24 +296,35 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                 onTapped: (){
 
 
-
-                  controller.key.currentState!.validate();
-
-                  controller.mode.value = AutovalidateMode.always;
-
                   final id = FirebaseAuth.instance.currentUser!.uid;
 
 
-                  if(controller.nameController.text.isNotEmpty && controller.bioController.text.isNotEmpty && controller.nameController.text.length >= 5 && controller.bioController.text.length >= 5 && controller.image.value != null ){
+
+                  if(controller.nameController.text.isNotEmpty && controller.bioController.text.isNotEmpty  && controller.image.value != null && controller.selectDate.value != 'Select Date' && controller.selectGender.value != 'Select Gender' ){
 
 
                     controller.progress.value = true;
+
+                    if(controller.nameController.text.length <= 5){
+                      controller.progress.value = false;
+                      return showCustomSnackBar(context, 'Minimum 5 characters of Name') ;
+                    }
+
+                    if(controller.bioController.text.length <= 5 ){
+                      controller.progress.value = false;
+                      return showCustomSnackBar(context, 'Minimum 5 characters of Bio') ;
+                    }
+
+
+
 
                     ref.doc(id).set({
                       'id' : id,
                       'name' : controller.nameController.text,
                       'bio' : controller.bioController.text,
                       'email' : FirebaseAuth.instance.currentUser!.email,
+                      'dateOfBirth' : controller.selectDate.value,
+                      'gender' : controller.selectGender.value
                     }).then((value) {
 
 
@@ -403,6 +346,12 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
 
 
 
+
+                  }else{
+
+
+                    showCustomSnackBar(context, 'Please complete all fields');
+                    controller.progress.value = false;
 
                   }
 

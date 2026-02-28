@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../screens/chats/chat.dart';
 import '../../screens/chats/contacts.dart';
+import '../../screens/chats/languages.dart';
 import '../../screens/chats/messaging.dart';
 import '../../screens/chats/more.dart';
 import '../../screens/login/forgot.dart';
@@ -22,13 +23,14 @@ class MyRoutes{
     '/Onboarding' : (context) => Onboarding(),
     '/LoginScreen' : (context) => LoginScreen(),
     '/SignupScreen' : (context) => SignupScreen(),
-    '/' : (context) => YourProfileScreen(),
+    '/YourProfileScreen' : (context) => YourProfileScreen(),
     '/ForgotScreen' : (context) => ForgotScreen(),
     '/BottomBarScreen' : (context) => BottomBarScreen(),
     '/ChatScreen' : (context) => ChatScreen(),
     '/ContactsScreen' : (context) => ContactsScreen(),
     '/MoreScreen' : (context) => MoreScreen(),
     '/MessagingScreen' : (context) => MessagingScreen(),
+    '/' : (context) => LanguagesScreen(),
 
 
 };

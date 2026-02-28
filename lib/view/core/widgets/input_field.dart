@@ -18,10 +18,15 @@ class InputField extends StatelessWidget {
     return TextFormField(
       controller: controller,
 
+      minLines: 1,
+      maxLines: null,
+   //   keyboardType: .multiline,
+      textInputAction: .done,
 
       validator: validator ,
 
       autovalidateMode:autoValidateMode ,
+
 
       decoration: InputDecoration(
         hintText: hintText.tr(),

@@ -20,8 +20,15 @@ void main() async{
 
         supportedLocales: [
 
+          Locale('ar'),
+          Locale('da'),
           Locale('en'),
+          Locale('hi'),
+          Locale('hr'),
+          Locale('id'),
+          Locale('ph'),
           Locale('ur'),
+          Locale('zh'),
 
         ],
 

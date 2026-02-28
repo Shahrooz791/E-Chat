@@ -248,6 +248,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     },);
 
 
+                  }else{
+                    controller.progress.value = false;
                   }
 
 
@@ -255,6 +257,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
 
                   showCustomSnackBar(context, 'Do no match password');
+                  controller.progress.value = false;
 
                 }
 

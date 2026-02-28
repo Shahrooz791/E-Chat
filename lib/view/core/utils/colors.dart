@@ -81,4 +81,17 @@ class MyColors {
   }
 
 
+  static Color red(BuildContext context){
+
+
+    return  Theme.of(context).brightness == Brightness.light?
+
+        Color(0xffF6695E):
+        Color(0xffF6695E);
+
+
+
+  }
+
+
 }
