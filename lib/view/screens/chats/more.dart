@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_chat/controllers/more_controller.dart';
+import 'package:e_chat/controllers/theme_changer_controller.dart';
 import 'package:e_chat/view/core/widgets/custom_button.dart';
 import 'package:e_chat/view/core/widgets/custom_snackbar.dart';
 import 'package:e_chat/view/core/widgets/input_field.dart';
@@ -32,6 +33,8 @@ class _MoreScreenState extends State<MoreScreen> {
   final id = FirebaseAuth.instance.currentUser!.uid;
 
   final ref = FirebaseFirestore.instance.collection('userData');
+
+  final themeController = Get.put(ThemeChangerController());
 
 
 
@@ -203,7 +206,22 @@ class _MoreScreenState extends State<MoreScreen> {
                 CustomText(text: 'Dark Mode', fontWeight: .w600, fontSize: 16, color: MyColors.black(context)),
 
 
-                Switch(value: true, onChanged: (value){},),
+                Transform.scale(
+                    scale: 0.8,
+                    child: Switch(
+
+                      value: themeController.value.value,
+
+                      activeTrackColor: MyColors.primaryBlue(context),
+                      activeThumbColor: MyColors.bgWhite(context),
+
+                      inactiveTrackColor: MyColors.greyThree(context),
+
+                      onChanged: (value){
+
+                        themeController.getNewValue(value);
+
+                      },)),
 
 
               ],

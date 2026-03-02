@@ -3,6 +3,7 @@ import 'package:e_chat/view/core/utils/assets.dart';
 import 'package:e_chat/view/core/utils/colors.dart';
 import 'package:e_chat/view/core/widgets/custom_back_button.dart';
 import 'package:e_chat/view/core/widgets/custom_padding.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,84 +35,101 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
       backgroundColor: MyColors.bgWhite(context),
 
 
-      body: CustomPadding(child: Column(
+      body: SingleChildScrollView(
 
 
-        children: [
+        child: CustomPadding(child: Column(
 
 
-          SizedBox(height: 47.h,),
-
-          Row(
-
-            crossAxisAlignment: .start,
+          children: [
 
 
-            children: [
+            SizedBox(height: 47.h,),
 
-              CustomBackButton(),
+            Row(
 
-
-
-              Spacer(flex: 1,),
-
-              CustomText(text: 'Languages', fontWeight: .w600, fontSize: 18, color: MyColors.black(context)),
+              crossAxisAlignment: .start,
 
 
-              Spacer(flex: 2,),
+              children: [
 
-
-            ],
-
-          ),
-
-          SizedBox(height: 47.h,),
-
-          ListView.separated(
-
-            separatorBuilder: (context, index) => Divider(color: MyColors.greyThree(context),),
-
-
-            padding: .zero,
-
-            itemCount: controller.languageDetails.length,
-
-            physics: NeverScrollableScrollPhysics(),
-
-            primary: false,
-
-            shrinkWrap: true,
-
-
-            itemBuilder: (context, index) {
-
-
-              return ListTile(
-
-                contentPadding: .zero,
-
-                onTap: (){
-
-                  controller.selectIndex.value = index;
-
-                },
-
-                title: CustomText(text: controller.languageDetails[index], fontWeight: .w600, fontSize: 18, color: MyColors.black(context)),
-
-                trailing: InkWell(child: SvgPicture.asset(SvgImages.copyIcon)),
-
-              ) ;
-
-          },
+                CustomBackButton(),
 
 
 
-          ),
+                Spacer(flex: 1,),
 
-        ],
+                CustomText(text: 'Languages', fontWeight: .w600, fontSize: 18, color: MyColors.black(context)),
 
 
-      )),
+                Spacer(flex: 2,),
+
+
+              ],
+
+            ),
+
+             SizedBox(height: 15.h,),
+
+            ListView.separated(
+
+              separatorBuilder: (context, index) => Divider(color: MyColors.greyThree(context),),
+
+
+              padding: .zero,
+
+              itemCount: controller.languageDetails.length,
+
+
+              //physics: NeverScrollableScrollPhysics(),
+
+              //primary: false,
+
+              shrinkWrap: true,
+
+
+              itemBuilder: (context, index) {
+
+
+                return Obx(() {
+
+
+                  return ListTile(
+
+                    contentPadding: .zero,
+
+                    onTap: ()async{
+
+                      controller.selectIndex.value = index;
+
+                     await context.setLocale(Locale(controller.languageDetails[controller.selectIndex.value].localeName)).then((value) {
+                       Navigator.pop(context);
+                     },);
+
+                    },
+
+                    title: CustomText(text: controller.languageDetails[index].languageName, fontWeight: .w600, fontSize: 18, color: MyColors.black(context)),
+
+                    trailing: controller.selectIndex.value == index ?  SvgPicture.asset(SvgImages.checkIcon,height: 24.h,width: 24.w,color: MyColors.primaryBlue(context),) : null,
+
+                  ) ;
+
+
+                },) ;
+
+              },
+
+
+
+            ),
+
+          ],
+
+
+        )),
+
+
+      ),
 
 
     );

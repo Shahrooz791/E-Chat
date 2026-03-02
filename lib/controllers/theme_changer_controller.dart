@@ -10,6 +10,32 @@ class ThemeChangerController extends GetxController {
 
   var themeMode = ThemeMode.light.obs;
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    loadTheme();
+  }
+
+
+   void loadTheme()async{
+
+     var data = await ThemeChangerDb.getInstance.getTheme();
+
+
+     if(data.isNotEmpty){
+
+       bool isDark =  data.first['change'] == 1;
+
+       value.value = isDark;
+
+       themeMode.value = isDark ? ThemeMode.dark : ThemeMode.light;
+
+     }
+
+
+   }
+
 
   void getNewValue(bool val)async{
 

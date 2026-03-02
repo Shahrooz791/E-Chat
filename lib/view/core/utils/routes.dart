@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 
+import '../../paractice.dart';
 import '../../screens/chats/chat.dart';
 import '../../screens/chats/contacts.dart';
 import '../../screens/chats/languages.dart';
@@ -19,7 +20,7 @@ class MyRoutes{
 
   static Map<String , Widget Function (BuildContext)> routes = {
 
-    //'/' : (context) => Onboarding(),
+    '/' : (context) => Onboarding(),
     '/Onboarding' : (context) => Onboarding(),
     '/LoginScreen' : (context) => LoginScreen(),
     '/SignupScreen' : (context) => SignupScreen(),
@@ -30,7 +31,8 @@ class MyRoutes{
     '/ContactsScreen' : (context) => ContactsScreen(),
     '/MoreScreen' : (context) => MoreScreen(),
     '/MessagingScreen' : (context) => MessagingScreen(),
-    '/' : (context) => LanguagesScreen(),
+    '/LanguagesScreen' : (context) => LanguagesScreen(),
+    '/Practice' : (context) => Practice(),
 
 
 };

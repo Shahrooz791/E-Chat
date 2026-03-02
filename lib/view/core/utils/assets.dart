@@ -22,5 +22,6 @@ class  SvgImages{
   static const String searchIcon = '${_path}Icon (2).svg';
   static const String sendIcon = '${_path}Icon (3).svg';
   static const String copyIcon = '${_path}Copy.svg';
+  static const String checkIcon = '${_path}checkmark.svg';
 
 }

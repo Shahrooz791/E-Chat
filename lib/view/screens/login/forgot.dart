@@ -63,7 +63,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
             SizedBox(height: 79.h,),
 
 
-            CustomText(text: 'Forgot Password', fontWeight: .w700, fontSize: 24, color: MyColors.black(context)),
+            CustomText(text: 'Forgot password', fontWeight: .w700, fontSize: 24, color: MyColors.black(context)),
 
 
             SizedBox(height: 8.h,),
