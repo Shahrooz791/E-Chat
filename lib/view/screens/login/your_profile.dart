@@ -104,7 +104,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                         controller.getImage();
                       },
 
-                      child: SvgPicture.asset(SvgImages.addImageIcon,height:   24.h,width: 24.w,)),
+                      child: SvgPicture.asset(SvgImages.addImageIcon,height:   24.h,width: 24.w,color: MyColors.black(context),)),
                 ),
 
               ],

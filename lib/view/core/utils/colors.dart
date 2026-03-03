@@ -69,6 +69,19 @@ class MyColors {
 
   }
 
+
+  static Color bgInputField(BuildContext context){
+
+
+    return  Theme.of(context).brightness == Brightness.light?
+
+        Color(0xffF7F7FC):
+        Color(0xff152033);
+
+
+
+  }
+
   static Color bgWhite(BuildContext context){
 
     return Theme.of(context).brightness == Brightness.light?

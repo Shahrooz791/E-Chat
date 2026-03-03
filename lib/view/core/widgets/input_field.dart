@@ -62,7 +62,7 @@ class InputField extends StatelessWidget {
 
         contentPadding: .zero,
 
-        fillColor: MyColors.white(context),
+        fillColor: MyColors.bgInputField(context),
 
         filled: true,
       ),

@@ -368,7 +368,7 @@ class _MoreScreenState extends State<MoreScreen> {
 
             },
 
-            child: SvgPicture.asset(SvgImages.copyIcon)),
+            child: SvgPicture.asset(SvgImages.copyIcon,color: MyColors.black(context),)),
 
       ],
 

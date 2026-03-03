@@ -14,7 +14,7 @@ void showCustomSnackBar(BuildContext context,String message){
     SnackBar(
 
 
-      content: CustomText(text: message, fontWeight: .w600, fontSize: 12, color: MyColors.white(context)) ,
+      content: CustomText(text: message, fontWeight: .w600, fontSize: 12, color: MyColors.bgInputField(context)) ,
 
 
 
