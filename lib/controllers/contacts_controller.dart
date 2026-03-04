@@ -5,5 +5,4 @@ class ContactsController extends GetxController{
 
   final searchController = TextEditingController();
 
-
 }

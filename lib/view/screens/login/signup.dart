@@ -226,7 +226,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                   controller.progress.value = true;
 
-                  if(controller.emailController.text.trim().isNotEmpty && controller.passController.text.trim().isNotEmpty && controller.confirmPassController.text.trim().isNotEmpty ){
+                  if( controller.key.value.currentState!.validate() ){//controller.emailController.text.trim().isNotEmpty && controller.passController.text.trim().isNotEmpty && controller.confirmPassController.text.trim().isNotEmpty
 
                     auth.createUserWithEmailAndPassword(email: controller.emailController.text, password: controller.confirmPassController.text).then((value) {
 

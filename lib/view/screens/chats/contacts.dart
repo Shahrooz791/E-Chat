@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import '../../core/utils/assets.dart';
 import '../../core/widgets/custom_text.dart';
 import '../../core/widgets/input_field.dart';
-import 'messaging.dart';
 
 class ContactsScreen extends StatefulWidget {
   const ContactsScreen({super.key});
@@ -20,15 +19,19 @@ class ContactsScreen extends StatefulWidget {
 }
 
 class _ContactsScreenState extends State<ContactsScreen> {
+
   final controller = Get.put(ContactsController());
+
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    final uid = FirebaseAuth.instance.currentUser!.uid;
 
-    final ref = FirebaseFirestore.instance
-        .collection('userData')
-        .where('id', isNotEqualTo: uid);
+   // final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    //final ref = FirebaseFirestore.instance
+      //  .collection('userData')
+        //.where('id', isNotEqualTo: uid);
 
     return Scaffold(
       backgroundColor: MyColors.bgWhite(context),
@@ -38,6 +41,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
           crossAxisAlignment: .start,
 
           children: [
+
             SizedBox(height: 47.h),
 
             CustomText(
@@ -64,8 +68,91 @@ class _ContactsScreenState extends State<ContactsScreen> {
                 ],
               ),
             ),
+            
+            _builderUserList(),
 
-            Expanded(
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _builderUserList(){
+    return Expanded(
+      child: StreamBuilder(
+
+          stream: FirebaseFirestore.instance.collection('userData').snapshots(),
+
+
+          builder: (context, snapshot) {
+
+
+            if(snapshot.hasError){
+              return Text('Error') ;
+            }
+
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Text('Loading...') ;
+            }
+
+            return ListView(
+
+              children: snapshot.data!.docs.map<Widget>((doc) => _buildUserListItem(doc)).toList(),
+
+            );
+
+
+          },
+
+
+
+      ),
+    ) ;
+  }
+
+
+  Widget _buildUserListItem(DocumentSnapshot document){
+
+
+    Map<String , dynamic> data = document.data()! as Map<String , dynamic>;
+
+    if(auth.currentUser!.email !=  data['email']){
+
+      return ListTile(
+
+
+        title: Text(data['email']),
+
+        onTap: (){
+
+          Navigator.pushNamed(context, '/MessagingScreen',arguments: {
+
+            'receiverUserEmail' : data['email'],
+            'receiverUserID' : data['id'],
+
+          });
+
+        },
+
+
+      ) ;
+
+    }else{
+
+      return Container();
+
+    }
+
+
+  }
+
+}
+
+
+
+/*
+
+Expanded(
               child: StreamBuilder(
                 stream: ref.snapshots(),
 
@@ -130,9 +217,5 @@ class _ContactsScreenState extends State<ContactsScreen> {
                 },
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+
+ */

@@ -172,9 +172,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 text: 'Continue',onTapped: ()async{
 
-                controller.key.value.currentState!.validate();
+                //controller.key.value.currentState!.validate();
 
-                if(controller.emailController.text.isNotEmpty && controller.passController.text.isNotEmpty){
+                if(controller.key.value.currentState!.validate()){//controller.emailController.text.isNotEmpty && controller.passController.text.isNotEmpty
 
                   controller.progress.value = true;
 
