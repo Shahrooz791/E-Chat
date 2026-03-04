@@ -305,12 +305,12 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
 
                     controller.progress.value = true;
 
-                    if(controller.nameController.text.length <= 5){
+                    if(controller.nameController.text.length <= 4){
                       controller.progress.value = false;
                       return showCustomSnackBar(context, 'Minimum 5 characters of Name') ;
                     }
 
-                    if(controller.bioController.text.length <= 5 ){
+                    if(controller.bioController.text.length <= 4 ){
                       controller.progress.value = false;
                       return showCustomSnackBar(context, 'Minimum 5 characters of Bio') ;
                     }

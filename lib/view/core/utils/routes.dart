@@ -20,13 +20,13 @@ class MyRoutes{
 
   static Map<String , Widget Function (BuildContext)> routes = {
 
-    //'/' : (context) => Onboarding(),
+    '/' : (context) => Onboarding(),
     '/Onboarding' : (context) => Onboarding(),
     '/LoginScreen' : (context) => LoginScreen(),
     '/SignupScreen' : (context) => SignupScreen(),
     '/YourProfileScreen' : (context) => YourProfileScreen(),
     '/ForgotScreen' : (context) => ForgotScreen(),
-    '/' : (context) => BottomBarScreen(),
+    '/BottomBarScreen' : (context) => BottomBarScreen(),
     '/ChatScreen' : (context) => ChatScreen(),
     '/ContactsScreen' : (context) => ContactsScreen(),
     '/MoreScreen' : (context) => MoreScreen(),

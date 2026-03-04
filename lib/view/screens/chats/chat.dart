@@ -1,8 +1,11 @@
+
+
 import 'package:e_chat/view/core/utils/assets.dart';
 import 'package:e_chat/view/core/utils/colors.dart';
 import 'package:e_chat/view/core/widgets/custom_padding.dart';
 import 'package:e_chat/view/core/widgets/custom_text.dart';
 import 'package:e_chat/view/core/widgets/input_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,16 +47,16 @@ class _ChatScreenState extends State<ChatScreen> {
 
 
           SizedBox(height: 47.h,),
-          
-          
-          
+
+
+
           CustomText(text: 'Chats', fontWeight: .w600, fontSize: 18, color: MyColors.black(context)),
 
 
 
           SizedBox(height: 20.h,),
-          
-          
+
+
           InputField(hintText: 'Search',prefixIcon: Column(
 
             mainAxisAlignment: .center,
@@ -68,7 +71,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
 
 
-          
+
+
+
+
+
 
 
         ],
