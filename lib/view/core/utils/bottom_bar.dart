@@ -5,9 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-
 
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({super.key});
@@ -17,59 +14,53 @@ class BottomBarScreen extends StatefulWidget {
 }
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
-
-
-
   final controller = Get.put(BottomBarController());
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      backgroundColor: MyColors.bgWhite(context),
 
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          backgroundColor: MyColors.bgWhite(context),
 
-      backgroundColor:  MyColors.bgWhite(context),
+          fixedColor: MyColors.primaryBlue(context),
 
-      bottomNavigationBar: Obx(() => BottomNavigationBar(
+          onTap: (index) {
+            controller.selectIndex.value = index;
+          },
 
-        backgroundColor: MyColors.bgWhite(context),
+          //type: .fixed,
 
-        fixedColor: MyColors.primaryBlue(context),
+          //showSelectedLabels: true,
+          currentIndex: controller.selectIndex.value,
 
-        onTap: (index){
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                SvgImages.chat,
+                color: MyColors.black(context),
+              ),
+              label: StringTranslateExtension("Chats").tr(),
+              activeIcon: SvgPicture.asset(
+                SvgImages.chat,
+                color: MyColors.primaryBlue(context),
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.more_horiz, color: MyColors.black(context)),
+              label: StringTranslateExtension('More').tr(),
+              activeIcon: Icon(
+                Icons.more_horiz,
+                color: MyColors.primaryBlue(context),
+              ),
+            ),
+          ],
+        ),
+      ),
 
-          controller.selectIndex.value = index;
-
-        },
-
-        //type: .fixed,
-
-        //showSelectedLabels: true,
-
-        currentIndex: controller.selectIndex.value,
-
-
-        items: [
-
-
-
-          BottomNavigationBarItem(icon: SvgPicture.asset(SvgImages.chat,color: MyColors.black(context),),label: StringTranslateExtension("Chats").tr() ,activeIcon: SvgPicture.asset(SvgImages.chat,color: MyColors.primaryBlue(context),)),
-          BottomNavigationBarItem(icon: SvgPicture.asset(SvgImages.contact,color: MyColors.black(context)) ,label: StringTranslateExtension('Contacts').tr() ,activeIcon: SvgPicture.asset(SvgImages.contact,color: MyColors.primaryBlue(context),) ),
-          BottomNavigationBarItem(icon: Icon(Icons.more_horiz,color: MyColors.black(context) ),label: StringTranslateExtension('More').tr(),activeIcon:  Icon(Icons.more_horiz,color: MyColors.primaryBlue(context) ) ),
-
-        ],
-
-
-      ),),
-
-      body:  Obx(() => controller.screens[controller.selectIndex.value] ,) ,
-
+      body: Obx(() => controller.screens[controller.selectIndex.value]),
     );
-
   }
-
-
-
-
-
 }

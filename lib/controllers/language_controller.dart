@@ -1,17 +1,11 @@
-
 import 'package:get/get.dart';
 
 import '../models/language_model.dart';
 
-class LanguageController extends GetxController{
-
-
-
+class LanguageController extends GetxController {
   RxInt selectIndex = 0.obs;
 
-
   RxList<LanguageModel> languageDetails = <LanguageModel>[
-
     LanguageModel(languageName: 'English', localeName: 'en'),
     LanguageModel(languageName: 'Arabic', localeName: 'ar'),
     LanguageModel(languageName: 'Danish', localeName: 'da'),
@@ -21,9 +15,5 @@ class LanguageController extends GetxController{
     LanguageModel(languageName: 'Filipino', localeName: 'ph'),
     LanguageModel(languageName: 'Urdu', localeName: 'ur'),
     LanguageModel(languageName: 'Chinese', localeName: 'zh'),
-
-
   ].obs;
-
-
 }

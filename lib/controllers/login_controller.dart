@@ -2,9 +2,8 @@ import 'package:e_chat/view/core/utils/assets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class LoginController extends GetxController{
-
-  RxList<String>  authImages = <String>[
+class LoginController extends GetxController {
+  RxList<String> authImages = <String>[
     SvgImages.facebook,
     SvgImages.google,
     SvgImages.apple,
@@ -13,7 +12,6 @@ class LoginController extends GetxController{
   RxBool progress = false.obs;
 
   var key = GlobalKey<FormState>().obs;
-
 
   final Rx<AutovalidateMode> mode = AutovalidateMode.disabled.obs;
 
@@ -27,5 +25,4 @@ class LoginController extends GetxController{
     emailController.dispose();
     super.onClose();
   }
-
 }

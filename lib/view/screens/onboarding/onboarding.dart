@@ -1,15 +1,10 @@
-import 'package:e_chat/controllers/theme_changer_controller.dart';
-import 'package:e_chat/db/theme_changer_db.dart';
 import 'package:e_chat/view/core/utils/assets.dart';
 import 'package:e_chat/view/core/utils/colors.dart';
 import 'package:e_chat/view/core/widgets/custom_button.dart';
 import 'package:e_chat/view/core/widgets/custom_padding.dart';
 import 'package:e_chat/view/core/widgets/custom_text.dart';
-import 'package:e_chat/view/core/widgets/input_field.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -55,7 +50,11 @@ class _OnboardingState extends State<Onboarding> {
             CustomButton(
               text: 'Start Messaging',
               onTapped: () {
-                Navigator.pushNamedAndRemoveUntil(context, '/LoginScreen',(route) => false,);
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/LoginScreen',
+                  (route) => false,
+                );
               },
             ),
           ],

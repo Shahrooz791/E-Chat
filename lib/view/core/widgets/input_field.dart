@@ -7,11 +7,20 @@ import 'package:google_fonts/google_fonts.dart';
 class InputField extends StatelessWidget {
   final String hintText;
   final TextEditingController? controller;
-  final String? Function(String?)?  validator;
-  final AutovalidateMode?  autoValidateMode;
+  final String? Function(String?)? validator;
+  final AutovalidateMode? autoValidateMode;
   final Widget? prefixIcon;
+  final void Function(String)? onChanged;
 
-  const InputField({super.key, required this.hintText, this.controller,this.validator,this.autoValidateMode,this.prefixIcon});
+  const InputField({
+    super.key,
+    required this.hintText,
+    this.controller,
+    this.validator,
+    this.autoValidateMode,
+    this.prefixIcon,
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +29,17 @@ class InputField extends StatelessWidget {
 
       minLines: 1,
       maxLines: null,
-   //   keyboardType: .multiline,
+      //   keyboardType: .multiline,
       textInputAction: .done,
 
-      validator: validator ,
+      onChanged: onChanged,
 
-      autovalidateMode:autoValidateMode ,
+      validator: validator,
 
+      autovalidateMode: autoValidateMode,
 
       decoration: InputDecoration(
         hintText: hintText.tr(),
-
 
         prefixIcon: prefixIcon,
 
@@ -42,13 +51,25 @@ class InputField extends StatelessWidget {
           color: MyColors.grey(context),
         ),
 
-        focusedBorder: OutlineInputBorder(borderRadius: .circular(4.r),borderSide: .none),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: .circular(4.r),
+          borderSide: .none,
+        ),
 
-        enabledBorder: OutlineInputBorder(borderRadius: .circular(4.r),borderSide: .none),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: .circular(4.r),
+          borderSide: .none,
+        ),
 
-        border: OutlineInputBorder(borderRadius: .circular(4.r),borderSide: .none),
+        border: OutlineInputBorder(
+          borderRadius: .circular(4.r),
+          borderSide: .none,
+        ),
 
-        disabledBorder: OutlineInputBorder(borderRadius: .circular(4.r),borderSide: .none),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: .circular(4.r),
+          borderSide: .none,
+        ),
 
         errorBorder: OutlineInputBorder(
           borderRadius: .circular(4.r),

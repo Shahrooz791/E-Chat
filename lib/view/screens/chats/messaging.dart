@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_chat/view/core/utils/assets.dart';
 import 'package:e_chat/view/core/utils/colors.dart';
 import 'package:e_chat/view/core/widgets/chat_bubble.dart';
@@ -15,33 +14,35 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import '../../../controllers/messaging_controller.dart';
 
 class MessagingScreen extends StatefulWidget {
-
   final String? receiverUserEmail;
   final String? receiverUserID;
+  final String? receiverUserName;
 
-  const MessagingScreen({super.key,this.receiverUserEmail,this.receiverUserID});
+  const MessagingScreen({
+    super.key,
+    this.receiverUserEmail,
+    this.receiverUserID,
+    this.receiverUserName,
+  });
 
   @override
   State<MessagingScreen> createState() => _MessagingScreenState();
 }
 
 class _MessagingScreenState extends State<MessagingScreen> {
-
-
   final controller = Get.put(MessagingController());
   final _auth = FirebaseAuth.instance;
 
   late String receiverUserID;
   late String receiverUserEmail;
+  late String receiverUserName;
 
   void sendMessage() async {
     if (controller.messageController.text.isNotEmpty) {
       await controller.sendMessage(
+        receiverUserID,
 
-          receiverUserID,
-
-          controller.messageController.text
-
+        controller.messageController.text,
       );
 
       //clear the controller after sending the message
@@ -52,21 +53,18 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as Map;
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
 
     receiverUserEmail = args['receiverUserEmail'];
     receiverUserID = args['receiverUserID'];
-
+    receiverUserName = args['receiverUserName'];
 
     return Scaffold(
       backgroundColor: MyColors.greyThree(context),
 
       appBar: AppBar(
         title: CustomText(
-          text: receiverUserEmail,
+          text: receiverUserName.toString(),
           fontWeight: .w600,
           fontSize: 18,
           color: MyColors.black(context),
@@ -81,10 +79,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery
-              .of(context)
-              .viewInsets
-              .bottom,
+          bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
 
         child: Container(
@@ -125,70 +120,52 @@ class _MessagingScreenState extends State<MessagingScreen> {
       ),
 
       body: _buildMessageList(),
-
-
-    );
-
-
-  }
-
-  //build message item
-  Widget _buildMessageItem(DocumentSnapshot document) {
-
-
-    Map<String,dynamic> data = document.data() as Map<String,dynamic>;
-
-    //align the message to the right if the sender is the current user , other wise to the left
-
-    var alignment = (data['senderId'] == _auth.currentUser!.uid) ? Alignment.centerRight : Alignment.centerLeft;
-
-    return Container(
-      alignment: alignment,
-      child: Column(
-
-        crossAxisAlignment: (data['senderId'] == _auth.currentUser!.uid) ? .end : .start ,
-        mainAxisAlignment: (data['senderId'] == _auth.currentUser!.uid) ? .end : .start ,
-
-        children: [
-
-          Text(data['senderEmail']),
-          ChatBubble(message: data['message']),
-
-        ],
-
-      ),
     );
   }
 
-  //build message list
-  Widget _buildMessageList(){
-    return  StreamBuilder(
+  Widget _buildMessageList() {
+    return StreamBuilder(
+      stream: controller.getMessage(receiverUserID, _auth.currentUser!.uid),
 
-        stream: controller.getMessage(receiverUserID, _auth.currentUser!.uid),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: CustomText(
+              text: 'Error${snapshot.hasError.toString()}',
+              fontWeight: .w600,
+              fontSize: 18,
+              color: MyColors.black(context),
+            ),
+          );
+        }
 
-        builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CustomText(
+              text: '',
+              fontWeight: .w600,
+              fontSize: 18,
+              color: MyColors.black(context),
+            ),
+          );
+        }
 
+        return ListView.builder(
+          itemCount: snapshot.data!.docs.length,
 
-          if(snapshot.hasError){
-            return Text('Error') ;
-          }
+          itemBuilder: (context, index) {
+            return Container(
+              alignment:
+                  snapshot.data!.docs[index]['senderId'] ==
+                      _auth.currentUser!.uid
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
 
-          if(snapshot.connectionState == ConnectionState.waiting){
-
-            return Text('Loading...') ;
-
-          }
-
-          return ListView(
-
-            children: snapshot.data!.docs.map((documents) => _buildMessageItem(documents),).toList(),
-
-          ) ;
-
-
-        },
-
+              child: ChatBubble(message: snapshot.data!.docs[index]['message']),
+            );
+          },
+        );
+      },
     );
   }
-
 }

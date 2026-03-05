@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_chat/view/core/widgets/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ import '../../core/widgets/custom_padding.dart';
 import '../../core/widgets/custom_text.dart';
 import '../../core/widgets/input_field.dart';
 
-
 class ForgotScreen extends StatefulWidget {
   const ForgotScreen({super.key});
 
@@ -23,164 +23,138 @@ class ForgotScreen extends StatefulWidget {
 }
 
 class _ForgotScreenState extends State<ForgotScreen> {
-
-
-
-
-
   final controller = Get.put(ForgotPassController());
 
   final auth = FirebaseAuth.instance;
 
+  final ref = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
-
       backgroundColor: MyColors.bgWhite(context),
 
-
-
       body: SingleChildScrollView(
+        child: CustomPadding(
+          child: Column(
+            children: [
+              SizedBox(height: 47.h),
 
-
-        child: CustomPadding(child: Column(
-
-
-          children: [
-
-
-
-            SizedBox(height: 47.h,),
-
-            Align(
+              Align(
                 alignment: .topLeft,
-                child: CustomBackButton()),
+                child: CustomBackButton(
+                  onTapped: () {
+                    controller.emailController.clear();
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
 
+              SizedBox(height: 79.h),
 
-            SizedBox(height: 79.h,),
+              CustomText(
+                text: 'Forgot password',
+                fontWeight: .w700,
+                fontSize: 24,
+                color: MyColors.black(context),
+              ),
 
+              SizedBox(height: 8.h),
 
-            CustomText(text: 'Forgot password', fontWeight: .w700, fontSize: 24, color: MyColors.black(context)),
+              CustomText(
+                text: 'Recover your account password',
+                fontWeight: .w400,
+                fontSize: 14,
+                color: MyColors.black(context),
+                textAlign: .center,
+              ),
 
+              SizedBox(height: 60.h),
 
-            SizedBox(height: 8.h,),
+              Form(
+                key: controller.key.value,
 
-
-            CustomText(text: 'Recover your account password', fontWeight: .w400, fontSize: 14, color: MyColors.black(context),textAlign: .center,),
-
-
-
-
-            SizedBox(height: 60.h,),
-
-
-            Form(
-
-                key: controller.key.value ,
-
-                autovalidateMode:  controller.mode.value ,
+                autovalidateMode: controller.mode.value,
 
                 child: InputField(
-
                   controller: controller.emailController,
 
-                  hintText: 'Your email',validator: (value) {
+                  hintText: 'Your email',
+                  validator: (value) {
+                    // if(value!.isEmpty){
+                    //   return   'Enter value';
+                    // }else if(!value.contains('@gmail.com')){
+                    //   return  'Enter correct email' ;
+                    // }
 
+                    if (value == null || value.isEmpty) {
+                      return 'Enter email';
+                    }
 
-                  // if(value!.isEmpty){
-                  //   return   'Enter value';
-                  // }else if(!value.contains('@gmail.com')){
-                  //   return  'Enter correct email' ;
-                  // }
+                    final gmailRegex = RegExp(
+                      r'^[a-zA-Z0-9._%+-]+@gmail\.com$',
+                    );
 
-                  if (value == null || value.isEmpty) {
-                    return 'Enter email';
-                  }
+                    if (!gmailRegex.hasMatch(value)) {
+                      return 'Enter valid Gmail address';
+                    }
 
-                  final gmailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@gmail\.com$');
+                    return null;
+                  },
+                  autoValidateMode: controller.mode.value,
+                ),
+              ),
 
-                  if (!gmailRegex.hasMatch(value)) {
-                    return 'Enter valid Gmail address';
-                  }
+              SizedBox(height: 70.h),
 
-                  return null;
+              Obx(() {
+                return CustomButton(
+                  progress: controller.progress.value,
 
+                  text: 'Continue',
+                  onTapped: () async {
+                    if (controller.key.value.currentState!.validate()) {
+                      controller.progress.value = true;
 
-                }, autoValidateMode: controller.mode.value , )),
+                      var result = await ref
+                          .collection('userData')
+                          .where(
+                            'email',
+                            isEqualTo: controller.emailController.text,
+                          )
+                          .get();
 
+                      if (result.docs.isNotEmpty) {
+                        await auth
+                            .sendPasswordResetEmail(
+                              email: controller.emailController.text,
+                            )
+                            .then((value) {
+                              showCustomSnackBar(
+                                context,
+                                'Password forgot link share in your email',
+                              );
+                              controller.emailController.clear();
+                              controller.progress.value = false;
+                            })
+                            .onError((error, stackTrace) {
+                              showCustomSnackBar(context, error.toString());
+                              controller.progress.value = false;
+                            });
+                      } else {
+                        showCustomSnackBar(context, 'Email not registered');
+                        controller.progress.value = false;
+                      }
+                    }
+                  },
+                );
+              }),
 
-
-            SizedBox(height: 70.h,),
-
-
-            Obx(() {
-
-              return  CustomButton(
-
-                progress: controller.progress.value,
-
-                text: 'Continue',onTapped: (){
-
-                controller.key.value.currentState!.validate();
-
-
-                if(controller.emailController.text.isNotEmpty){
-
-                  controller.progress.value = true;
-
-                  auth.sendPasswordResetEmail(email: controller.emailController.text).then((value) {
-
-                    showCustomSnackBar(context, 'Password forgot link share in your email');
-                    controller.emailController.clear();
-                    controller.progress.value = false;
-
-                  },).onError((error, stackTrace) {
-
-                    showCustomSnackBar(context, error.toString());
-                    controller.progress.value = false;
-
-
-                  },);
-
-                }
-
-
-
-
-
-              },) ;
-
-
-            },) ,
-
-
-            SizedBox(height: 20.h,),
-
-
-
-
-          ],
-
-
-        )),
-
-
+              SizedBox(height: 20.h),
+            ],
+          ),
+        ),
       ),
-
-
     );
-
-
-
   }
-
-
-
-
-
-
-
 }

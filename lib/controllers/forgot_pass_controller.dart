@@ -1,9 +1,7 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class ForgotPassController extends GetxController{
-
+class ForgotPassController extends GetxController {
   var key = GlobalKey<FormState>().obs;
 
   final Rx<AutovalidateMode> mode = AutovalidateMode.disabled.obs;
@@ -12,14 +10,10 @@ class ForgotPassController extends GetxController{
 
   RxBool progress = false.obs;
 
-
-
-
   @override
   void onClose() {
     // TODO: implement onClose
     emailController.dispose();
     super.onClose();
   }
-
 }

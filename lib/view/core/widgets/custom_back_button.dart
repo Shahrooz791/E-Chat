@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBackButton extends StatelessWidget {
-  const CustomBackButton({super.key});
+  final VoidCallback? onTapped;
+  const CustomBackButton({super.key, this.onTapped});
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       padding: .zero,
       alignment: .topLeft,
-      onPressed: () {
-        Navigator.pop(context);
-      },
+      onPressed:
+          onTapped ??
+          () {
+            Navigator.pop(context);
+          },
       icon: Icon(
         Icons.arrow_back_ios_rounded,
         color: MyColors.black(context),

@@ -1,15 +1,11 @@
-class  PngImages{
-
-
+class PngImages {
   static const String _path = 'assets/png_images/';
 
   static const String illustration = '${_path}Illustration.png';
-
+  static const String appLogo = '${_path}Logo Wrapper.png';
 }
 
-class  SvgImages{
-
-
+class SvgImages {
   static const String _path = 'assets/svg_images/';
 
   static const String facebook = '${_path}Group 439.svg';
@@ -23,5 +19,4 @@ class  SvgImages{
   static const String sendIcon = '${_path}Icon (3).svg';
   static const String copyIcon = '${_path}Copy.svg';
   static const String checkIcon = '${_path}checkmark.svg';
-
 }

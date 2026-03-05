@@ -9,7 +9,12 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? onTapped;
   final bool? progress;
 
-  const CustomButton({super.key, required this.text,this.onTapped,this.progress});
+  const CustomButton({
+    super.key,
+    required this.text,
+    this.onTapped,
+    this.progress,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +28,14 @@ class CustomButton extends StatelessWidget {
 
       onPressed: onTapped,
 
-      child:  progress == true ?  CircularProgressIndicator(color: MyColors.bgWhite(context),)  : CustomText(
-        text: text.tr(),
-        fontWeight: .w600,
-        fontSize: 16.sp,
-        color: MyColors.white(context),
-      ),
+      child: progress == true
+          ? CircularProgressIndicator(color: MyColors.bgWhite(context))
+          : CustomText(
+              text: text.tr(),
+              fontWeight: .w600,
+              fontSize: 16.sp,
+              color: MyColors.white(context),
+            ),
     );
   }
 }
