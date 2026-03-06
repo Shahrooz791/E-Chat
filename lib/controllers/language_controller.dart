@@ -12,7 +12,7 @@ class LanguageController extends GetxController {
     LanguageModel(languageName: 'Hindi', localeName: 'hi'),
     LanguageModel(languageName: 'Croatian', localeName: 'hr'),
     LanguageModel(languageName: 'Bahasa Indonesia', localeName: 'id'),
-    LanguageModel(languageName: 'Filipino', localeName: 'ph'),
+    LanguageModel(languageName: 'Filipino', localeName: 'fil'),
     LanguageModel(languageName: 'Urdu', localeName: 'ur'),
     LanguageModel(languageName: 'Chinese', localeName: 'zh'),
   ].obs;

@@ -20,7 +20,7 @@ void main() async {
         Locale('hi'),
         Locale('hr'),
         Locale('id'),
-        Locale('ph'),
+        Locale('fil'),
         Locale('ur'),
         Locale('zh'),
       ],

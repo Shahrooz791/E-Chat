@@ -13,7 +13,7 @@ class ChatBubble extends StatelessWidget {
     return Container(
       padding: .all(12.r),
 
-      margin: .symmetric(vertical: 5.h),
+      margin: .symmetric(vertical: 5.h,horizontal: 5.w),
 
       decoration: BoxDecoration(
         borderRadius: .circular(12.r),
@@ -26,7 +26,7 @@ class ChatBubble extends StatelessWidget {
           Text(
             message,
             style: GoogleFonts.saira(
-              fontSize: 16.sp,
+              fontSize: 17.sp,
               color: MyColors.bgWhite(context),
             ),
           ),

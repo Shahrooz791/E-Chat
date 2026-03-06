@@ -294,7 +294,7 @@ class _MoreScreenState extends State<MoreScreen> {
         ),
 
         SizedBox(
-          width: 200,
+          width: 150,
           child: CustomText(
             text: userDetail,
             fontWeight: .w600,
@@ -318,8 +318,6 @@ class _MoreScreenState extends State<MoreScreen> {
         ),
       ],
     );
-
-    ;
   }
 
   Widget showCustomSheet(

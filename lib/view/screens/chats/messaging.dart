@@ -72,7 +72,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
         centerTitle: true,
 
-        backgroundColor: MyColors.white(context),
+        backgroundColor: MyColors.bgWhite(context),
 
         leading: Align(alignment: .bottomRight, child: CustomBackButton()),
       ),
